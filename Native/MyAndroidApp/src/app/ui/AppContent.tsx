@@ -4,6 +4,7 @@ import Home from "../../pages/home/Home";
 import { useEffect, useState } from "react";
 import IRoute from "../../features/model/IRoute";
 import Calc from "../../pages/calc/Calc";
+import ErrorPage from "../../pages/404/ErrorPage";
 
 const startPage:IRoute = {
     slug: 'home',
@@ -60,7 +61,7 @@ export default function AppContent() {
         <View style={AppContentStyle.pageWidget}>
             { page.slug == "home" ? <Home />
             : page.slug == "calc" ? <Calc />
-            : <Text>Not Found</Text>
+            : <ErrorPage />
             }
         </View>        
 
@@ -84,6 +85,10 @@ export default function AppContent() {
             <TouchableOpacity onPress={() => navigate({slug: 'home'})}>
                 <Image style={AppContentStyle.bottomBarIcon} 
                     source={require('../asset/home.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate({slug: '404'})}>
+                <Image style={AppContentStyle.bottomBarIcon} 
+                    source={require('../asset/404.png')}/>
             </TouchableOpacity>
         </View>
     </View>;
