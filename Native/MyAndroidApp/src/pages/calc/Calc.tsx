@@ -4,6 +4,8 @@ import CalcButton from "./ui/CalcButton";
 import { CalcButtonTypes } from "./model/CalcButtonTypes";
 import { useState } from "react";
 import { CalcOperations } from "./model/CalcOperations";
+import MemoryButton from "./ui/MemoryButton";
+import { MemoryButtonTypes } from "./model/MemoryButtonTypes";
 
 const maxDigits = 20;
 const dotSymbol = ',';
@@ -17,6 +19,7 @@ interface ICalcState
     operation?: CalcOperations,
     prevArgument?: number,
     isNeedClearEntry: boolean,
+    memoryStatuses: { [key: string]: MemoryButtonTypes },
 };
 
 const initCaclState:ICalcState =
@@ -25,13 +28,22 @@ const initCaclState:ICalcState =
     result: '0',
     isNeedClear: true,
     isNeedClearEntry: false,
-}
+    memoryStatuses:
+    {
+        "MC": MemoryButtonTypes.disabled,
+        "MR": MemoryButtonTypes.disabled,
+        "M+": MemoryButtonTypes.disabled,
+        "M-": MemoryButtonTypes.disabled,
+        "MS": MemoryButtonTypes.disabled,
+        "Mv": MemoryButtonTypes.disabled,
+    },
+};
 
 export default function Calc() {
     const [calcState, setCalcState] = useState<ICalcState>(initCaclState);
     const equalClick = () =>
     {
-        let oper = initCaclState.operation;
+        let oper = String(calcState.operation);
 
         let resOp;
 
@@ -53,6 +65,7 @@ export default function Calc() {
                 break;
             default:
                 resOp = NaN;
+                break;
         }
 
         setCalcState({...calcState,
@@ -180,6 +193,23 @@ export default function Calc() {
         });
     }
 
+    const changeType = (text: string) =>
+    {
+        const currentStatus = calcState.memoryStatuses[text];
+
+        const newStatus = currentStatus === MemoryButtonTypes.disabled
+            ? MemoryButtonTypes.enabled
+            : MemoryButtonTypes.disabled;
+
+        setCalcState({...calcState,
+            memoryStatuses:
+            {
+                ...calcState.memoryStatuses,
+                [text]: newStatus,
+            },
+        });
+    }
+
     const del = (text:string) =>
     {
         setCalcState(initCaclState);
@@ -192,7 +222,15 @@ export default function Calc() {
         <Text style={CalcStyle.expression}>{calcState.expression}</Text>
         <Text style={[CalcStyle.result, {fontSize: resultFontSize}]}>{calcState.result}</Text>
         <View style={CalcStyle.memoryRow}>
-            <Text>Memory buttons</Text>
+            {["MC", "MR", "M+", "M-", "MS", "Mv"].map((btnText) =>
+                (
+                    <MemoryButton
+                        key={btnText}
+                        text={btnText}
+                        type={calcState.memoryStatuses[btnText]}
+                        onPress={() => changeType(btnText)}
+                     />
+                ))}
         </View>
 
         <View style={CalcStyle.keyboard}>
