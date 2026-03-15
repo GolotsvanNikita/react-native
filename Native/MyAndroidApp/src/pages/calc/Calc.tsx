@@ -11,6 +11,7 @@ import IRoute from "../../features/model/IRoute";
 const maxDigits = 20;
 const dotSymbol = ',';
 const minusSymbol = '\u2212';
+const spaceSymbol = '\u2009';
 
 interface ICalcState
 {
@@ -102,16 +103,19 @@ export default function Calc() {
         return Number
         (
             res
-            .replace(dotSymbol, '.')
-            .replace(minusSymbol, '-')
+                .replace(new RegExp(spaceSymbol, 'g'), '')
+                .replace(dotSymbol, '.')
+                .replace(minusSymbol, '-')
         );
     };
 
     const numToRes = (num:number):string =>
     {
-        return num.toString()
+        const res = num.toString()
             .replace('.', dotSymbol)
             .replace('-', minusSymbol);
+
+        return applyFormatting(res);
     };
 
     const invClick = () =>
@@ -129,16 +133,19 @@ export default function Calc() {
         });
     };
 
-    const digitClick = (text:string) =>
+    const digitClick = (text: string) =>
     {
         let res = calcState.result;
-        if (res == '0' || calcState.isNeedClear || calcState.isNeedClearEntry)
+
+        if (res === '0' || calcState.isNeedClear || calcState.isNeedClearEntry)
         {
             res = '';
         }
-        if (calcState.result.length < maxDigits + (res.includes(dotSymbol) ? 1 : 0))
+
+        if (getDigitCount(res) < maxDigits)
         {
             res += text;
+            res = applyFormatting(res);
         }
 
         setCalcState({...calcState,
@@ -146,36 +153,41 @@ export default function Calc() {
             expression: calcState.isNeedClear ? "" : calcState.expression,
             isNeedClear: false,
             isNeedClearEntry: false,
-        })
+        });
     };
 
     const backspaceClick = () =>
     {
-        let len = calcState.result.length;
+        if (calcState.result === "0") return;
 
-        if (len < 1)
+        let res = calcState.result.slice(0, -1);
+
+        let cleanRes = res.replace(new RegExp(spaceSymbol, 'g'), '');
+
+        if (cleanRes === "" || cleanRes === minusSymbol)
         {
-            setCalcState({...calcState,
-                result: "0",
-            })
+            res = "0";
         }
-        if (calcState.result == "0") return;
+        else 
+        {
+            res = applyFormatting(res);
+        }
 
-        let res = len == 2 && calcState.result.includes(minusSymbol) ? "0" : calcState.result.substring(0, len - 1);
-
-        setCalcState({...calcState,
+        setCalcState({ ...calcState,
             result: res,
-        })
+        });
     };
 
     const dotClick = (text: string) =>
     {
         if (!calcState.result.includes(text))
         {
+            let res = (calcState.isNeedClear || calcState.isNeedClearEntry) 
+                    ? "0" + text 
+                    : calcState.result + text;
+            
             setCalcState({...calcState,
-                result: calcState.isNeedClear || calcState.isNeedClearEntry
-                ? "0" + text: calcState.result + text,
-                expression: calcState.isNeedClear ? "" : calcState.expression,
+                result: applyFormatting(res),
                 isNeedClear: false,
                 isNeedClearEntry: false,
             });
@@ -275,6 +287,22 @@ export default function Calc() {
             result: resSt,
         });
     }
+
+    const getDigitCount = (text: string) =>
+    {
+        return text.replace(new RegExp(`[${minusSymbol}${dotSymbol}${spaceSymbol}]`, 'g'), '').length;
+    };
+
+    const applyFormatting = (text: string) =>
+    {
+        let cleanStr = text.replace(new RegExp(spaceSymbol, 'g'), '');
+        
+        const parts = cleanStr.split(dotSymbol);
+        
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, spaceSymbol);
+        
+        return parts.join(dotSymbol);
+    };
 
     const resultFontSize = calcState.result.length <= 11 ? 60.0 : 660 / calcState.result.length;
 

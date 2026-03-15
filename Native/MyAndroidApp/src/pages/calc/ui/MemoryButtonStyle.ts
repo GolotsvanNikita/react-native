@@ -7,7 +7,7 @@ const MemoryButtonStyle = StyleSheet.create
     {
         flex: 1,
         alignItems: 'center',
-        paddingVertical: 10,
+        paddingVertical: 5.0,
     },
     text:
     {

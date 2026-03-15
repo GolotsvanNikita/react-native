@@ -77,19 +77,19 @@ const CalcStyle = StyleSheet.create({
         marginVertical: 10.0,
     },
     memoryRow: {
-        display: "flex",
+        flex: 0.35,
         flexDirection: "row",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
+        gap: 4.0,
         backgroundColor: "#333",
-        paddingVertical: 10.0,
+        paddingHorizontal: 4.0,
     },
-    memoryRowLand:
-    {
-        display: "flex",
+    memoryRowLand: {
+        flex: 1,
         flexDirection: "row",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
+        gap: 4.0,
         backgroundColor: "#333",
-        paddingVertical: 1.0,
     },
     buttonsRow: {
         flex: 1,
