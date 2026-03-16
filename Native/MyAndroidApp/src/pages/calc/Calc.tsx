@@ -323,13 +323,13 @@ export default function Calc() {
 
     const numToSquareRoot = () =>
     {
-        let res = calcState.result.includes(minusSymbol) || calcState.result === '0'
+        let res = calcState.result.includes(minusSymbol)
             ? calcState.result
             : numToRes(Math.sqrt(resToNum(calcState.result)));
         
         setCalcState({...calcState,
             result: res,
-            expression: calcState.result.includes(minusSymbol) || calcState.result === '0'
+            expression: calcState.result.includes(minusSymbol)
              ? '' 
              : `\u00B2\u221a${calcState.result}`,
         });
