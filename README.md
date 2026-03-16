@@ -11,3 +11,32 @@
 
 # 4
 <img width="900" height="405" alt="Image" src="https://github.com/user-attachments/assets/0ec0348a-dfcb-44dc-9827-6161770bbfbb" />
+
+# 5
+
+## Squared
+<img width="405" height="900" alt="Image" src="https://github.com/user-attachments/assets/e96edd96-97da-4481-8479-8d241c70fa4b" />
+<img width="405" height="900" alt="Image" src="https://github.com/user-attachments/assets/d960cfe6-2727-44ce-b56b-f0be8de75f1d" />
+
+## To the square root
+<img width="405" height="900" alt="Image" src="https://github.com/user-attachments/assets/200dcdf0-b1a5-4702-88b6-bc7faab832c0" />
+
+## Negative result check (no react)
+> <img width="405" height="900" alt="Image" src="https://github.com/user-attachments/assets/7227959e-4473-4e4b-b17a-a5311cb213ed" />
+
+> ### Realization
+```
+const numToSquareRoot = () =>
+{
+    let res = calcState.result.includes(minusSymbol)
+        ? calcState.result
+        : numToRes(Math.sqrt(resToNum(calcState.result)));
+    
+    setCalcState({...calcState,
+        result: res,
+        expression: calcState.result.includes(minusSymbol)
+         ? '' 
+         : `\u00B2\u221a${calcState.result}`,
+    });
+}
+```
