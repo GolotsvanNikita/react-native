@@ -281,7 +281,7 @@ export default function Calc() {
 
     const ctgX = () =>
     {
-        let res = Math.cos(Number(calcState.result)) / Math.sin(Number(calcState.result));
+        let res = Math.cos(resToNum(calcState.result)) / Math.sin(resToNum(calcState.result));
         let resSt = String(res);
         setCalcState({...calcState,
             result: resSt,
@@ -303,6 +303,37 @@ export default function Calc() {
         
         return parts.join(dotSymbol);
     };
+
+    const numToSquare = () =>
+    {
+        let res = numToRes(resToNum(calcState.result) * resToNum(calcState.result));
+
+        if (calcState.result.includes(minusSymbol))
+        {
+            res = minusSymbol + res;
+        }
+
+        setCalcState({...calcState,
+            result: res,
+            expression: calcState.result + '\u00b2',
+            isNeedClear: false,
+            isNeedClearEntry: false,
+        });
+    };
+
+    const numToSquareRoot = () =>
+    {
+        let res = calcState.result.includes(minusSymbol) || calcState.result === '0'
+            ? calcState.result
+            : numToRes(Math.sqrt(resToNum(calcState.result)));
+        
+        setCalcState({...calcState,
+            result: res,
+            expression: calcState.result.includes(minusSymbol) || calcState.result === '0'
+             ? '' 
+             : `\u00B2\u221a${calcState.result}`,
+        });
+    }
 
     const resultFontSize = calcState.result.length <= 11 ? 60.0 : 660 / calcState.result.length;
 
@@ -334,8 +365,8 @@ export default function Calc() {
             </View>
              <View style={CalcStyle.buttonsRow}>
                 <CalcButton text={"\u00b9/\u2093"} onPress={invClick} />
-                <CalcButton text={"x\u00b2"} />
-                <CalcButton text={"\u00B2\u221ax\u0305"} />
+                <CalcButton text={"x\u00b2"} onPress={numToSquare}/>
+                <CalcButton text={"\u00B2\u221ax\u0305"} onPress={numToSquareRoot} />
                 <CalcButton text={"\u00F7"} onPress={(face) => operButtonClick(CalcOperations.div, face)}/>
             </View>
              <View style={CalcStyle.buttonsRow}>
@@ -406,7 +437,7 @@ export default function Calc() {
             </View>
             <View style={CalcStyle.buttonsRowLand}>
                 <CalcButton text="tanx" onPress={tanX}/>
-                <CalcButton text={"\u00B2\u221ax\u0305"} />
+                <CalcButton text={"\u00B2\u221ax\u0305"} onPress={numToSquareRoot} />
                 <CalcButton text="1" buttonType={CalcButtonTypes.digit} onPress={digitClick} />
                 <CalcButton text="2" buttonType={CalcButtonTypes.digit} onPress={digitClick} />
                 <CalcButton text="3" buttonType={CalcButtonTypes.digit} onPress={digitClick} />
@@ -415,7 +446,7 @@ export default function Calc() {
             </View>
             <View style={CalcStyle.buttonsRowLand}>
                 <CalcButton text="ctgx" onPress={ctgX}/>
-                <CalcButton text={"x\u00b2"} />
+                <CalcButton text={"x\u00b2"} onPress={numToSquare}/>
                 <CalcButton text={"\u207a\u2215\u208b"} buttonType={CalcButtonTypes.digit} onPress={plusMinClick} />
                 <CalcButton text="0" buttonType={CalcButtonTypes.digit} onPress={digitClick} />
                 <CalcButton text={dotSymbol} buttonType={CalcButtonTypes.digit} onPress={dotClick} />
