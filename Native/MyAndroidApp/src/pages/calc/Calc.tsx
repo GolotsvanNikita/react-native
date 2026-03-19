@@ -257,19 +257,17 @@ export default function Calc() {
 
     const cosX = () =>
     {
-        let res = Math.cos(Number(calcState.result));
-        let resSt = String(res);
+        let res = Math.cos(resToNum(calcState.result));
         setCalcState({...calcState,
-            result: resSt,
+            result: numToRes(res),
         });
     }
 
     const sinX = () =>
     {
-        let res = Math.sin(Number(calcState.result));
-        let resSt = String(res);
+        let res = Math.sin(resToNum(calcState.result));
         setCalcState({...calcState,
-            result: resSt,
+            result: numToRes(res),
         });
     }
 
@@ -451,7 +449,7 @@ export default function Calc() {
         <View style={CalcStyle.keyboardLand}>
             <View style={CalcStyle.buttonsRowLand}>
                 <CalcButton text="cosx" onPress={cosX}/>
-                <CalcButton text="%" />
+                <CalcButton text="%" onPress={(face) => operButtonClick(CalcOperations.proc, face)}/>
                 <CalcButton text="7" buttonType={CalcButtonTypes.digit} onPress={digitClick} />
                 <CalcButton text="8" buttonType={CalcButtonTypes.digit} onPress={digitClick} />
                 <CalcButton text="9" buttonType={CalcButtonTypes.digit} onPress={digitClick} />

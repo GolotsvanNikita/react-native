@@ -53,6 +53,35 @@ const RateStyle = StyleSheet.create({
         textAlign: "center",
         fontSize: 19.0,
     },
+    rateCcAlt:
+    {
+        flex: 1,
+        color: "#ffffff",
+        backgroundColor: "rgb(117, 117, 117)",
+        borderRadius: 20.0,
+        fontSize: 19.0,
+        textAlign: "center",
+    },
+    rateTxtAlt:
+    {
+        flex: 5,
+        color: "#ffffff",
+        fontSize: 19.0,
+        backgroundColor: "rgb(117, 117, 117)",
+        borderRadius: 20.0,
+        textAlign: "center",
+        textShadowColor: "#111",
+        fontWeight: "bold",
+    },
+    rateRateAlt:
+    {
+        flex: 2,
+        color: Colors.primaryTextColor,
+        backgroundColor: "#313131",
+        borderRadius: 20.0,
+        textAlign: "center",
+        fontSize: 19.0,
+    },
 });
 
 export default RateStyle;

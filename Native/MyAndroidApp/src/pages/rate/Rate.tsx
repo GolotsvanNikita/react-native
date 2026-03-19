@@ -26,11 +26,20 @@ export default function Rate()
         </View>
 
         <ScrollView>
-            {rates.map(rate => <View key={rate.cc} style={RateStyle.rateLine}>  
-                <Text style={RateStyle.rateCc}>{rate.cc}</Text>
-                <Text style={RateStyle.rateTxt}>{rate.txt}</Text>
-                <Text style={RateStyle.rateRate}>{rate.rate}</Text>
-            </View>)}            
+            {rates.map((rate, index) =>
+            (
+                <View key={rate.cc} style={RateStyle.rateLine}>  
+                    <Text style={[RateStyle.rateCc, index % 2 !== 0 && RateStyle.rateCcAlt]}>
+                        {rate.cc}
+                    </Text>
+                    <Text style={[RateStyle.rateTxt, index % 2 !== 0 && RateStyle.rateTxtAlt]}>
+                        {rate.txt}
+                    </Text>
+                    <Text style={[RateStyle.rateRate, index % 2 !== 0 && RateStyle.rateRateAlt]}>
+                        {rate.rate}
+                    </Text>
+                </View>
+            ))}            
         </ScrollView>
 
         <DatePicker
