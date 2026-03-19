@@ -74,6 +74,9 @@ export default function Calc() {
             case CalcOperations.sub:
                 resOp = calcState.prevArgument! - resToNum(calcState.result);
                 break;
+            case CalcOperations.proc:
+                resOp = (resToNum(calcState.result) / 100) * calcState.prevArgument!;
+                break;
             default:
                 resOp = NaN;
                 break;
@@ -272,20 +275,44 @@ export default function Calc() {
 
     const tanX = () =>
     {
-        let res = Math.tan(Number(calcState.result));
-        let resSt = String(res);
-        setCalcState({...calcState,
-            result: resSt,
-        });
+        let arg = Math.tan(resToNum(calcState.result));
+        let cosRes = Math.cos(arg);
+
+        if (Math.abs(cosRes) < 1e-10)
+        {
+            setCalcState({...calcState,
+                result: calcState.result,
+                isNeedClear: true,
+            });
+        }
+        else
+        {
+            setCalcState({...calcState,
+                result: numToRes(arg),
+                isNeedClear: true,
+            });
+        }
     }
 
     const ctgX = () =>
     {
-        let res = Math.cos(resToNum(calcState.result)) / Math.sin(resToNum(calcState.result));
-        let resSt = String(res);
-        setCalcState({...calcState,
-            result: resSt,
-        });
+        let arg = Math.cos(resToNum(calcState.result)) / Math.sin(resToNum(calcState.result));
+        let sinRes = Math.sin(arg);
+
+        if (Math.abs(sinRes) < 1e-10)
+        {
+            setCalcState({...calcState,
+                result: calcState.result,
+                isNeedClear: true,
+            });
+        }
+        else
+        {
+            setCalcState({...calcState,
+                result: numToRes(arg),
+                isNeedClear: true,
+            });
+        }
     }
 
     const getDigitCount = (text: string) =>
@@ -333,6 +360,11 @@ export default function Calc() {
              ? '' 
              : `\u00B2\u221a${calcState.result}`,
         });
+    };
+
+    const procentOperation = () =>
+    {
+
     }
 
     const resultFontSize = calcState.result.length <= 11 ? 60.0 : 660 / calcState.result.length;
@@ -358,7 +390,7 @@ export default function Calc() {
                     ))}
             </View>
             <View style={CalcStyle.buttonsRow}>
-                <CalcButton text="%" />
+                <CalcButton text="%" onPress={(face) => operButtonClick(CalcOperations.proc, face)}/>
                 <CalcButton text="CE" onPress={clearEntryClick}/>
                 <CalcButton text="C" onPress={del}/>
                 <CalcButton text={"\u232B"} onPress={backspaceClick}/>

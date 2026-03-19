@@ -4,6 +4,7 @@ export const CalcOperations =
     sub: "sub",
     div: "div",
     mul: "mul",
+    proc: "proc",
 } as const;
 
 export type CalcOperations =
