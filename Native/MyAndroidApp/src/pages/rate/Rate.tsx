@@ -5,28 +5,45 @@ import { useEffect, useState } from "react";
 import INbuRate from "../../entities/NbuRate/model/INbuRate";
 import NbuRateApi from "../../entities/NbuRate/api/NbuRateApi";
 import DatePicker from "react-native-date-picker";
+import { TextInput } from "react-native";
 
 export default function Rate()
 {
     const [rates, setRates] = useState<Array<INbuRate>>([]);
+    const [shownRates, setShownRates] = useState<Array<INbuRate>>([]);
     const [date, setDate] = useState<Date>(new Date());
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState<string>("");
 
     useEffect(() => 
     {
         NbuRateApi.getCurrentRates().then(setRates);
     }, []);
 
+    useEffect(() =>
+    {
+        if(search.length > 0)
+        {
+            setShownRates(rates.filter(r => r.cc.includes(search)));
+        }
+        else
+        {
+            setShownRates(rates);
+        }
+    }, [search,rates]);
+
     return <View style={RateStyle.pageContainer}>
-        <View>
+        <View style={RateStyle.pageTitleRow}>
+            <TextInput style={RateStyle.search} value={search} onChangeText={setSearch}/>       
+            
             <Text style={RateStyle.pageTitle}>Exchange rates of the NBU</Text>
             <TouchableOpacity onPress={() => setOpen(true)}>
-                <Text>{date.toDateString()}</Text>
+                <Text>{date.toDotted()}</Text>
             </TouchableOpacity>
         </View>
 
         <ScrollView>
-            {rates.map((rate, index) =>
+            {shownRates.map((rate, index) =>
             (
                 <View key={rate.cc} style={RateStyle.rateLine}>  
                     <Text style={[RateStyle.rateCc, index % 2 !== 0 && RateStyle.rateCcAlt]}>

@@ -82,6 +82,23 @@ const RateStyle = StyleSheet.create({
         textAlign: "center",
         fontSize: 19.0,
     },
+    titleDate:
+    {
+        color: Colors.primaryTextColor,
+    },
+    pageTitleRow:
+    {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    search:
+    {
+        borderWidth: 1.0,
+        borderColor: "#888",
+        flex:1,
+    }
 });
 
 export default RateStyle;
