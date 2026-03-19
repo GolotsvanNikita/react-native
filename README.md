@@ -40,3 +40,47 @@ const numToSquareRoot = () =>
     });
 }
 ```
+
+# 6
+
+## Procent
+<img width="369" height="820" alt="image" src="https://github.com/user-attachments/assets/f5da6193-785a-4970-9655-2de8ba7e6e50" />
+
+## Trigonometric functions (e.g. 15)
+
+### Cosx
+<img width="1051" height="473" alt="image" src="https://github.com/user-attachments/assets/389d4147-22cc-439e-94ed-a40874eb098d" />
+
+### Sinx
+<img width="1051" height="473" alt="image" src="https://github.com/user-attachments/assets/06ff80a0-84dd-4951-b4c9-6196d2ee0c21" />
+
+### Tanx
+<img width="1051" height="473" alt="image" src="https://github.com/user-attachments/assets/87bddc5d-5aac-4693-9619-6cbd6824f8ea" />
+
+### Ctgx
+<img width="1051" height="473" alt="image" src="https://github.com/user-attachments/assets/41da5c36-668f-4aa5-b620-a90bf635f98a" />
+
+## Added a check for values ​​approaching zero for the `tangent` and `catangent` functions
+```
+const tanX = () =>
+{
+    let arg = Math.tan(resToNum(calcState.result));
+    let cosRes = Math.cos(arg);
+
+    if (Math.abs(cosRes) < 1e-10)
+    {
+        setCalcState({...calcState,
+            result: calcState.result,
+            isNeedClear: true,
+        });
+    }
+    else
+    {
+        setCalcState({...calcState,
+            result: numToRes(arg),
+            isNeedClear: true,
+        });
+    }
+}
+```
+> The solution to the `catangent` is similar, but instead of cos, sin is checked.
