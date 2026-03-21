@@ -23,5 +23,12 @@ export default function Home() {
             </Image>
             <Text style={HomeMainStyle.navText}>Exchange rate of the NBU</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={HomeMainStyle.navItem} onPress={() => navigate({slug: 'anim'})}>
+            <Image source={require('../../features/asset/rate.png')}
+                style={HomeMainStyle.navImage}
+            >
+            </Image>
+            <Text style={HomeMainStyle.navText}>Animations</Text>
+        </TouchableOpacity>
     </View>;
 }

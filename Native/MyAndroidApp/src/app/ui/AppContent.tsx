@@ -8,6 +8,7 @@ import ErrorPage from "../../pages/404/ErrorPage";
 import HomeMain from "../../pages/homeMain/HomeMain";
 import { AppContext } from "../../features/context/AppContext";
 import Rate from "../../pages/rate/Rate";
+import Anim from "../../pages/anim/Anim";
 
 const startPage:IRoute = {
     slug: 'home',
@@ -70,6 +71,7 @@ export default function AppContent() {
                 : page.slug == "calc" ? <Calc />
                 : page.slug == "homeMain" ? <HomeMain />
                 : page.slug == "rate" ? <Rate />
+                : page.slug == "anim" ? <Anim />
                 : <ErrorPage />
                 }
             </View>        
@@ -88,7 +90,7 @@ export default function AppContent() {
                         <Image style={AppContentStyle.bottomBarIcon} 
                             source={require('../../features/asset/rate.png')}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigate({slug: 'calc'})}>
+                    <TouchableOpacity onPress={() => navigate({slug: 'anim'})}>
                         <Image style={AppContentStyle.bottomBarIcon} 
                             source={require('../../features/asset/calc.png')}/>
                     </TouchableOpacity>
