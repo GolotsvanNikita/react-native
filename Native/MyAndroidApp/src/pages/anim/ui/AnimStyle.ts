@@ -18,7 +18,8 @@ const AnimStyle = StyleSheet.create({
     {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: "space-between",
+        justifyContent: "space-between", 
+        paddingHorizontal: 50,
     },
     block:
     {
@@ -43,6 +44,13 @@ const AnimStyle = StyleSheet.create({
     {
         minHeight: 150.0,
         alignItems: "center",
+    },
+    rowCenter:
+    {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: "center", 
+        paddingHorizontal: 50,
     }
 });
 

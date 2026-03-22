@@ -101,10 +101,38 @@ export default function Anim()
         }).start();
     };
 
+    const liquidValue = useRef(new Animated.Value(1.0)).current;
+    const liquidPress = () =>
+    {
+        Animated.sequence
+        (
+            [
+                Animated.timing(liquidValue,
+                {
+                    toValue: 1.2,
+                    useNativeDriver: true,
+                    duration: 150,
+                }),
+                Animated.timing(liquidValue,
+                {
+                    toValue: 0.8,
+                    useNativeDriver: true,
+                    duration: 150,
+                }),
+                Animated.timing(liquidValue,
+                {
+                    toValue: 1.0,
+                    useNativeDriver: true,
+                    duration: 150,
+                }),
+            ]
+        ).start();
+    };
+
     return <View style={AnimStyle.pageContainer}>
         <Text style={AnimStyle.title}>Animations</Text>
+
         <View style={AnimStyle.row}>
-            
             <Pressable style={AnimStyle.anim} onPress={fadeOutPress}>
                 <Animated.View style={[AnimStyle.block, {opacity: fadeOutValue}]}>
                     <View style={AnimStyle.demo}></View>
@@ -119,8 +147,8 @@ export default function Anim()
                 </Animated.View>
             </Pressable>
         </View>
+
         <View style={AnimStyle.row}>
-            
             <Pressable style={AnimStyle.anim} onPress={scale1Press} onLongPress={scale11Press}>
                 <Animated.View style={[AnimStyle.block, {transform: [{scale: scale1Value}]}]}>
                     <View style={AnimStyle.demo}></View>
@@ -132,6 +160,15 @@ export default function Anim()
                 <Animated.View style={[AnimStyle.block, {transform:[{scaleX: scale2Value}, {scaleY: scale2Value.interpolate({inputRange: [1, 1.5], outputRange: [1, 1 / 1.5]})},]}]}>
                     <View style={AnimStyle.demo}></View>
                     <Text style={AnimStyle.subtitle}>Grounding</Text>
+                </Animated.View>
+            </Pressable>
+        </View>
+
+        <View style={AnimStyle.rowCenter}>
+            <Pressable style={AnimStyle.anim} onPress={liquidPress}>
+                <Animated.View style={[AnimStyle.block, {transform: [{scale: liquidValue}]}]}>
+                    <View style={AnimStyle.demo}></View>
+                    <Text style={AnimStyle.subtitle}>Liquid touch</Text>
                 </Animated.View>
             </Pressable>
         </View>
