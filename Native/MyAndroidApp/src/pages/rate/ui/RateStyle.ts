@@ -97,7 +97,7 @@ const RateStyle = StyleSheet.create({
     {
         borderWidth: 1.0,
         borderColor: "#888",
-        flex:1,
+        flex:0.5,
     },
     dateView:
     {
@@ -106,7 +106,7 @@ const RateStyle = StyleSheet.create({
     searchContainer:
     {
         flex: 1,
-        marginBottom: 10.0,
+        marginBottom: 30.0,
     },
 });
 

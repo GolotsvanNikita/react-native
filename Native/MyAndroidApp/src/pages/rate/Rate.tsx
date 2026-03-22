@@ -24,7 +24,13 @@ export default function Rate()
     {
         if(search.length > 0)
         {
-            setShownRates(rates.filter(r => r.cc.includes(search)));
+            setShownRates(rates.filter(r => 
+            {
+                const toLowRateCc = r.cc.toLowerCase().includes(search.toLowerCase());
+                const toLowRateTxt = r.txt.toLowerCase().includes(search.toLowerCase());
+
+                return toLowRateCc || toLowRateTxt;
+            }));
         }
         else
         {
