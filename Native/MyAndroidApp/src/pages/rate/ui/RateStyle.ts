@@ -98,7 +98,16 @@ const RateStyle = StyleSheet.create({
         borderWidth: 1.0,
         borderColor: "#888",
         flex:1,
-    }
+    },
+    dateView:
+    {
+        color: Colors.primaryTextColor,
+    },
+    searchContainer:
+    {
+        flex: 1,
+        marginBottom: 10.0,
+    },
 });
 
 export default RateStyle;

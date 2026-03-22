@@ -17,8 +17,8 @@ export default function Rate()
 
     useEffect(() => 
     {
-        NbuRateApi.getCurrentRates().then(setRates);
-    }, []);
+        NbuRateApi.getCurrentRatesToDate(date).then(setRates);
+    }, [date]);
 
     useEffect(() =>
     {
@@ -34,12 +34,13 @@ export default function Rate()
 
     return <View style={RateStyle.pageContainer}>
         <View style={RateStyle.pageTitleRow}>
-            <TextInput style={RateStyle.search} value={search} onChangeText={setSearch}/>       
-            
             <Text style={RateStyle.pageTitle}>Exchange rates of the NBU</Text>
             <TouchableOpacity onPress={() => setOpen(true)}>
-                <Text>{date.toDotted()}</Text>
+                <Text style={RateStyle.dateView}>{date.toDotted()}</Text>
             </TouchableOpacity>
+        </View>
+        <View style={RateStyle.searchContainer}>
+            <TextInput style={RateStyle.search} value={search} onChangeText={setSearch}/> 
         </View>
 
         <ScrollView>

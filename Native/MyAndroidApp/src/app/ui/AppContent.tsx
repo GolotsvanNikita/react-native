@@ -104,7 +104,7 @@ export default function AppContent() {
                     </TouchableOpacity>
                 </View>
             }
-        </View>;
+        </View>
     </AppContext.Provider>
 }
 /*
