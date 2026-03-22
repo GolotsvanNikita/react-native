@@ -91,4 +91,12 @@ const tanX = () =>
 <img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/c4c806dd-68cb-42d1-a363-31c4f63239d6" />
 <img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/e8cbc7bf-1b8f-49ee-9f20-67f86fd4b22d" />
 
+# 8
+
+## Text search
+<img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/89a58cc7-6c25-4fd5-842a-e19374bcf0c1" />
+<img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/d7982da2-608d-48cf-a5c4-2aa198138d5e" />
+
+## Code search
+<img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/12d78998-8658-4e2f-af83-d6564c92636d" />
 
