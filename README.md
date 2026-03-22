@@ -100,3 +100,7 @@ const tanX = () =>
 ## Code search
 <img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/12d78998-8658-4e2f-af83-d6564c92636d" />
 
+# 9
+https://github.com/user-attachments/assets/a1e084ab-d23e-417e-8fa4-d16476462198
+
+
