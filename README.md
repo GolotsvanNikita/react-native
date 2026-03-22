@@ -84,3 +84,11 @@ const tanX = () =>
 }
 ```
 > The solution to the `catangent` is similar, but instead of cos, sin is checked.
+
+# 7
+
+## 2020 and 2026
+<img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/c4c806dd-68cb-42d1-a363-31c4f63239d6" />
+<img width="411" height="913" alt="image" src="https://github.com/user-attachments/assets/e8cbc7bf-1b8f-49ee-9f20-67f86fd4b22d" />
+
+
