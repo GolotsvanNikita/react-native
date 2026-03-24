@@ -129,6 +129,122 @@ export default function Anim()
         ).start();
     };
 
+    const trans1xValue = useRef(new Animated.Value(0.0)).current;
+    const trans1yValue = useRef(new Animated.Value(0.0)).current;
+    const trans1Press = () =>
+    {
+        Animated.parallel([
+            Animated.sequence
+            (
+                [
+                    Animated.timing(trans1xValue,
+                    {
+                        toValue: 150.0,
+                        useNativeDriver: true,
+                        duration: 300,
+                    }),
+                    Animated.timing(trans1xValue,
+                    {
+                        toValue: -150.0,
+                        useNativeDriver: true,
+                        duration: 600,
+                    }),
+                    Animated.timing(trans1xValue,
+                    {
+                        toValue: 0.0,
+                        useNativeDriver: true,
+                        duration: 300,
+                    }),
+                ]
+            ),
+            Animated.sequence
+            (
+                [
+                    Animated.timing(trans1yValue,
+                    {
+                        toValue: 50.0,
+                        useNativeDriver: true,
+                        duration: 150,
+                    }),
+                    Animated.timing(trans1yValue,
+                    {
+                        toValue: -50.0,
+                        useNativeDriver: true,
+                        duration: 300,
+                    }),
+                    Animated.timing(trans1yValue,
+                    {
+                        toValue: 50.0,
+                        useNativeDriver: true,
+                        duration: 300,
+                    }),
+                    Animated.timing(trans1yValue,
+                    {
+                        toValue: -50.0,
+                        useNativeDriver: true,
+                        duration: 300,
+                    }),
+                    Animated.timing(trans1yValue,
+                    {
+                        toValue: 0.0,
+                        useNativeDriver: true,
+                        duration: 150,
+                    }),
+                ]
+            ) 
+        ]).start();
+    };
+
+    const rot1Value = useRef(new Animated.Value(0.0)).current;
+
+    const rot1Press = () =>
+    {
+        Animated.sequence
+        (
+            [
+                Animated.timing(rot1Value,
+                {
+                    toValue: 45.0,
+                    useNativeDriver: true,
+                    duration: 300,
+                }),
+                Animated.timing(rot1Value,
+                {
+                    toValue: -45.0,
+                    useNativeDriver: true,
+                    duration: 600,
+                }),
+                Animated.timing(rot1Value,
+                {
+                    toValue: 0.0,
+                    useNativeDriver: true,
+                    duration: 300,
+                }),
+            ]
+        ).start();
+    };
+
+    const fin1Value = useRef(new Animated.Value(1.0)).current;
+    let dot = true;
+    const fin1Press = () =>
+    {
+        Animated.timing(fin1Value,
+        {
+            toValue: 1.5,
+            useNativeDriver: true,
+            duration: 900,
+        }).start(
+            () => {
+                Animated.timing(fin1Value,
+                {
+                    toValue: 1.0,
+                    useNativeDriver: true,
+                    duration: 0,
+                }).start(dot ? fin1Press: undefined);
+            }
+        );
+    };
+
     return <View style={AnimStyle.pageContainer}>
         <Text style={AnimStyle.title}>Animations</Text>
 
@@ -164,11 +280,34 @@ export default function Anim()
             </Pressable>
         </View>
 
-        <View style={AnimStyle.rowCenter}>
+        <View style={AnimStyle.row}>
             <Pressable style={AnimStyle.anim} onPress={liquidPress}>
                 <Animated.View style={[AnimStyle.block, {transform: [{scale: liquidValue}]}]}>
                     <View style={AnimStyle.demo}></View>
                     <Text style={AnimStyle.subtitle}>Liquid touch</Text>
+                </Animated.View>
+            </Pressable>
+
+            <Pressable style={AnimStyle.block} onPress={trans1Press}>
+                <Animated.View style={[AnimStyle.block, {transform:[{translateX: trans1xValue}, {translateY: trans1yValue}, {scale: trans1xValue.interpolate({inputRange: [-50, 0, 50], outputRange:[0.75, 1, 1.33]})}]}]}>
+                    <View style={AnimStyle.demo}></View>
+                    <Text style={AnimStyle.subtitle}>Inf</Text>
+                </Animated.View>
+            </Pressable>
+        </View>
+
+        <View style={AnimStyle.row}>
+            <Pressable style={AnimStyle.block} onPress={rot1Press}>
+                <Animated.View style={[AnimStyle.block, {transform:[{rotate: rot1Value.interpolate({inputRange: [-90, 0, 90], outputRange: ["-90deg", "0deg", "90deg"]})}, {translateX: rot1Value.interpolate({inputRange: [-90, 90], outputRange: [80, -80]})}]}]}>
+                    <View style={AnimStyle.demo}></View>
+                    <Text style={AnimStyle.subtitle}>Rotation</Text>
+                </Animated.View>
+            </Pressable>
+
+            <Pressable style={AnimStyle.block} onPress={fin1Press}>
+                <Animated.View style={[AnimStyle.block, {transform:[{scale: fin1Value}]}]}>
+                    <View style={AnimStyle.demo}></View>
+                    <Text style={AnimStyle.subtitle}>End</Text>
                 </Animated.View>
             </Pressable>
         </View>
