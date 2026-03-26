@@ -103,4 +103,6 @@ const tanX = () =>
 # 9
 https://github.com/user-attachments/assets/a1e084ab-d23e-417e-8fa4-d16476462198
 
+# 10
+https://github.com/user-attachments/assets/ab724cd6-d438-4128-9893-079ef298337b
 
