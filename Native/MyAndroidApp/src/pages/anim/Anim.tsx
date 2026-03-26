@@ -1,6 +1,6 @@
 import { Animated, Pressable, Text, View } from "react-native";
 import AnimStyle from "./ui/AnimStyle";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 let fadeOutValue = new Animated.Value(1);
 let checkClick = false;
@@ -225,24 +225,55 @@ export default function Anim()
     };
 
     const fin1Value = useRef(new Animated.Value(1.0)).current;
-    let dot = true;
+    
+    let isAnimating = useRef(false);
+
+    const loopAnimRef = useRef<Animated.CompositeAnimation | null>(null);
+
+
     const fin1Press = () =>
     {
-        Animated.timing(fin1Value,
+        if (isAnimating.current)
         {
-            toValue: 1.5,
-            useNativeDriver: true,
-            duration: 900,
-        }).start(
-            () => {
-                Animated.timing(fin1Value,
-                {
-                    toValue: 1.0,
-                    useNativeDriver: true,
-                    duration: 0,
-                }).start(dot ? fin1Press: undefined);
+            if (loopAnimRef.current)
+            {
+                loopAnimRef.current.stop();
             }
-        );
+
+            isAnimating.current = false;
+
+            Animated.timing(fin1Value,
+            {
+                toValue: 1.0,
+                useNativeDriver: true,
+                duration: 900,
+            }).start();
+        }
+        else
+        {
+            isAnimating.current = true;
+
+            loopAnimRef.current = Animated.loop
+            (
+                Animated.sequence
+                ([
+                    Animated.timing(fin1Value,
+                    {
+                        toValue: 1.5,
+                        useNativeDriver: true,
+                        duration: 900,
+                    }),
+                    Animated.timing(fin1Value,
+                    {
+                        toValue: 1.0,
+                        useNativeDriver: true,
+                        duration: 900,
+                    }),
+                ])
+            );
+
+            loopAnimRef.current.start();
+        }
     };
 
     return <View style={AnimStyle.pageContainer}>
@@ -307,7 +338,7 @@ export default function Anim()
             <Pressable style={AnimStyle.block} onPress={fin1Press}>
                 <Animated.View style={[AnimStyle.block, {transform:[{scale: fin1Value}]}]}>
                     <View style={AnimStyle.demo}></View>
-                    <Text style={AnimStyle.subtitle}>End</Text>
+                    <Text style={AnimStyle.subtitle}>Loop</Text>
                 </Animated.View>
             </Pressable>
         </View>
