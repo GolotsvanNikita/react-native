@@ -9,6 +9,7 @@ import HomeMain from "../../pages/homeMain/HomeMain";
 import { AppContext } from "../../features/context/AppContext";
 import Rate from "../../pages/rate/Rate";
 import Anim from "../../pages/anim/Anim";
+import Swipe from "../../pages/swipe/Swipe";
 
 const startPage:IRoute = {
     slug: 'home',
@@ -72,6 +73,7 @@ export default function AppContent() {
                 : page.slug == "homeMain" ? <HomeMain />
                 : page.slug == "rate" ? <Rate />
                 : page.slug == "anim" ? <Anim />
+                : page.slug == "swipe" ? <Swipe />
                 : <ErrorPage />
                 }
             </View>        
@@ -97,6 +99,10 @@ export default function AppContent() {
                     <TouchableOpacity onPress={() => navigate({slug: 'homeMain'})}>
                         <Image style={AppContentStyle.bottomBarIcon} 
                             source={require('../../features/asset/home.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigate({slug: 'swipe'})}>
+                        <Image style={AppContentStyle.bottomBarIcon} 
+                            source={require('../../features/asset/swipe-left.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigate({slug: '404'})}>
                         <Image style={AppContentStyle.bottomBarIcon} 

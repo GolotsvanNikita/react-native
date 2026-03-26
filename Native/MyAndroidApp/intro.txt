@@ -17,3 +17,5 @@ https://developer.android.com/studio
 
 Попередні налаштування:
 включена віртуалізація у BIOS
+
+keytool -genkey -v -keystore dev_key.keystore -alias dev_key_alias -keyalg RSA -keysize 2048 -validity 10000
