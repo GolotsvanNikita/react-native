@@ -1,4 +1,4 @@
-import { Text, TextBase, Touchable, useWindowDimensions, View } from "react-native";
+import { Pressable, Text, TextBase, Touchable, useWindowDimensions, View } from "react-native";
 import SwipeStyle from "./ui/SwipeStyle";
 import { TouchableWithoutFeedback } from "react-native";
 import { GestureResponderEvent } from "react-native";
@@ -11,6 +11,7 @@ export default function Swipe()
     const {width, height} = useWindowDimensions();
     const shortestSide = Math.min(width, height);
     const fieldSide = 0.95 * shortestSide;
+    const tileSide = fieldSide / 4.0;
     const [text, setText] = useState<string>("");
     const length = 16;
     const [field, setField] = useState<Array<number>>(Array.from({length}, (_, i) => (3*i + 5) % 16));
@@ -122,7 +123,7 @@ export default function Swipe()
     {
         let emptyTileIndex = field.findIndex(i => i == 0);
 
-        if (emptyTileIndex == 12 || emptyTileIndex == 13 || emptyTileIndex == 14 || emptyTileIndex == 15 )
+        if (emptyTileIndex >= 12)
         {
             setText("Move disable");
             return;
@@ -137,7 +138,7 @@ export default function Swipe()
     {
         let emptyTileIndex = field.findIndex(i => i == 0);
 
-        if (emptyTileIndex == 0 || emptyTileIndex == 1 || emptyTileIndex == 2 || emptyTileIndex == 3 )
+        if (emptyTileIndex >= 0 && emptyTileIndex <= 3)
         {
             setText("Move disable");
             return;
@@ -148,17 +149,62 @@ export default function Swipe()
         setField([...field]);
     }
 
-    return <View style={[SwipeStyle.pageContainer, {flexDirection: width < height ? "column": "row"}]}>
+    const [difficulty, setDifficulty] = useState<number>(2);
+
+    const isPortrait = width < height;
+
+    return <View style={[SwipeStyle.pageContainer, {flexDirection: isPortrait ? "column": "row"}]}>
         <Text>Swipe: {text}</Text>
+
         <TouchableWithoutFeedback onPressIn={onGestureBegin} onPressOut={onGestureEnd}>
             <View style={[SwipeStyle.gameField, {width: fieldSide, height: fieldSide}]}>
-                {field.map(i => 
-                <View style={SwipeStyle.tileContainer}>
-                    { i != 0 && <View style={SwipeStyle.tile}>
-                        <Text style={SwipeStyle.textBlock}>{i}</Text>
-                    </View>}
-                </View>)}
+                {field.map((i, index) =>
+                    <View style={SwipeStyle.tileContainer} key={i}>
+                        { i != 0 &&
+                            <View style=
+                            {
+                                (i === index + 1 && i <= 4) ? SwipeStyle.tileCorrect :
+                                 (i === index + 1 && i > 4 && i <= 8) ? SwipeStyle.tileCorrect2 :
+                                  (i === index + 1 && i > 8 && i <= 12) ? SwipeStyle.tileCorrect3 :
+                                   (i === index + 1 && i > 12 && i <= 15) ? SwipeStyle.tileCorrect4 :
+                                    SwipeStyle.tile
+                            }>
+                                <Text style={SwipeStyle.textBlock}>{i}</Text>
+                            </View>
+                        }
+                    </View>
+                )}
             </View>
         </TouchableWithoutFeedback>
+
+        <View style={[SwipeStyle.difficultyContainer, 
+            {
+                marginTop: isPortrait ? 40.0 : 0,
+                marginLeft: isPortrait ? 0 : 40.0,
+            }]}>
+            <View style={[SwipeStyle.difficultySelector, {
+                flexDirection: isPortrait ? "row" : "column",
+                width: isPortrait ? fieldSide : 'auto',
+                height: isPortrait ? 100 : fieldSide,
+            }]}>
+                {[1, 2, 3, 4].map((num) => (
+                    <View key={num} style={SwipeStyle.winContainer}>
+                        <Text style={SwipeStyle.winText}>WIN</Text>
+                        <Pressable 
+                            onPress={() => setDifficulty(num)} 
+                            style={[
+                                difficulty == num 
+                                // @ts-ignore
+                                    ? SwipeStyle[`difficultyItemSelected${num === 1 ? '' : num}`] 
+                                    : SwipeStyle.difficultyItem,
+                                { width: '80%', height: 50 }
+                            ]}
+                        >
+                            <Text style={SwipeStyle.bottomText}>{num}</Text>
+                        </Pressable>
+                    </View>
+                ))}
+            </View>
+        </View>
     </View>;
 }
