@@ -93,10 +93,10 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('dev_key_name.keystore')
-            storePassword 'AZaz80509113330a'
-            keyAlias 'dev_key_alias'
-            keyPassword 'AZaz80509113330a'
+            storeFile file('test_release.keystore')
+            storePassword '80509113330a'
+            keyAlias 'test_release_alias'
+            keyPassword '80509113330a'
         }
     }
     buildTypes {
