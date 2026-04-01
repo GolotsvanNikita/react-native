@@ -1,8 +1,8 @@
-import { Pressable, Text, TextBase, Touchable, useWindowDimensions, View } from "react-native";
+import { Animated, Pressable, Text, TextBase, Touchable, useWindowDimensions, View } from "react-native";
 import SwipeStyle from "./ui/SwipeStyle";
 import { TouchableWithoutFeedback } from "react-native";
 import { GestureResponderEvent } from "react-native";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 let eventBegin: GestureResponderEvent | null;
 
@@ -149,31 +149,76 @@ export default function Swipe()
         setField([...field]);
     }
 
-    const [difficulty, setDifficulty] = useState<number>(2);
+    const [difficulty, setDifficulty] = useState<number>(3);
 
     const isPortrait = width < height;
+
+    const animatedValues = useRef(
+        Array.from({ length: 16 }, () => new Animated.ValueXY({ x: 0, y: 0 }))
+    ).current;
+
+    const getTilePosition = (index: number) =>
+    {
+        const row = Math.floor(index / 4);
+        const col = index % 4;
+        return {
+            x: col * tileSide - 10,
+            y: row * tileSide - 4 * 2,
+        };
+    };
+
+    useEffect(() => 
+    {
+        field.forEach((tileValue, currentIndex) => 
+        {
+            if (tileValue !== 0) 
+            {
+                const { x, y } = getTilePosition(currentIndex);
+            
+                Animated.spring(animatedValues[tileValue], 
+                {
+                    toValue: { x, y },
+                    useNativeDriver: true,
+                    speed: 4,
+                    bounciness: 5,
+                }).start();
+            }
+        });
+    }, [field]);
 
     return <View style={[SwipeStyle.pageContainer, {flexDirection: isPortrait ? "column": "row"}]}>
         <Text>Swipe: {text}</Text>
 
         <TouchableWithoutFeedback onPressIn={onGestureBegin} onPressOut={onGestureEnd}>
             <View style={[SwipeStyle.gameField, {width: fieldSide, height: fieldSide}]}>
-                {field.map((i, index) =>
-                    <View style={SwipeStyle.tileContainer} key={i}>
-                        { i != 0 &&
-                            <View style=
-                            {
+                {field.map((i, index) => 
+                {
+                    if (i === 0) return null;
+
+                    return (
+                        <Animated.View 
+                            key={i}
+                            style={[
+                                SwipeStyle.tileContainer, 
+                                {
+                                    width: tileSide, 
+                                    height: tileSide, 
+                                    transform: animatedValues[i].getTranslateTransform()
+                                }
+                            ]}
+                        >
+                            <View style={
                                 (i === index + 1 && i <= 4) ? SwipeStyle.tileCorrect :
-                                 (i === index + 1 && i > 4 && i <= 8) ? SwipeStyle.tileCorrect2 :
-                                  (i === index + 1 && i > 8 && i <= 12) ? SwipeStyle.tileCorrect3 :
-                                   (i === index + 1 && i > 12 && i <= 15) ? SwipeStyle.tileCorrect4 :
-                                    SwipeStyle.tile
+                                (i === index + 1 && i > 4 && i <= 8) ? SwipeStyle.tileCorrect2 :
+                                (i === index + 1 && i > 8 && i <= 12) ? SwipeStyle.tileCorrect3 :
+                                (i === index + 1 && i > 12 && i <= 15) ? SwipeStyle.tileCorrect4 :
+                                SwipeStyle.tile
                             }>
                                 <Text style={SwipeStyle.textBlock}>{i}</Text>
                             </View>
-                        }
-                    </View>
-                )}
+                        </Animated.View>
+                    );
+                })}
             </View>
         </TouchableWithoutFeedback>
 

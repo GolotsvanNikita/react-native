@@ -12,6 +12,7 @@ const SwipeStyle = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
+        position: "relative",
         // justifyContent: "space-between",
     },
     tile:
@@ -91,6 +92,7 @@ const SwipeStyle = StyleSheet.create({
         marginRight: 7.0,
         marginLeft: 10.0,
         marginTop: 8.0,
+        position: "absolute",
     },
     difficultyContainer:
     {
