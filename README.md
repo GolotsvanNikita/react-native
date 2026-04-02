@@ -109,4 +109,16 @@ https://github.com/user-attachments/assets/ab724cd6-d438-4128-9893-079ef298337b
 # 11-12
 https://github.com/user-attachments/assets/f59a04ed-b076-4a01-80dd-c9ee55a7f1dd
 
+# 13
+# Start Game
+<img width="404" height="926" alt="image" src="https://github.com/user-attachments/assets/ea2dc46f-b396-429c-92b4-10fcfcb94dc9" />
+
+# Modal win
+<img width="404" height="926" alt="image" src="https://github.com/user-attachments/assets/6e2dd96d-2f01-481d-be49-f0e67fb5c02c" />
+<img width="404" height="926" alt="image" src="https://github.com/user-attachments/assets/dc85d7cb-bcda-4cdd-8124-07a27dc44072" />
+
+# Victory display every level 
+<img width="404" height="926" alt="image" src="https://github.com/user-attachments/assets/1cc2b23b-d146-4704-adc4-f6bcaa5cc927" />
+<img width="404" height="926" alt="image" src="https://github.com/user-attachments/assets/fcca5e73-7613-408c-8b42-14ca9836e082" />
+
 
